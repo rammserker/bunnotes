@@ -1,7 +1,9 @@
 // import express from 'express';
 const express = require('express'),
-    app = express();
+    app = express(),
+    cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 
 const requestLogger = (req, res, next) => {
