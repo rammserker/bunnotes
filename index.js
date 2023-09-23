@@ -4,6 +4,16 @@ const express = require('express'),
 
 app.use(express.json());
 
+const requestLogger = (req, res, next) => {
+    console.log('Method:', req.method);
+    console.log('Path:', req.path);
+    console.log('Body:', req.body);
+    console.log('---');
+    next();
+};
+
+app.use(requestLogger);
+
 let notas = [
     {
         id: 1,
@@ -80,6 +90,12 @@ app.delete('/api/notes/:id', (req, res) => {
 
     res.status(204).end();
 });
+
+const endpointDesconocido = (req,res,next) => {
+    res.status(404).json({ error: 'Endpoint desconocido' });
+};
+
+app.use(endpointDesconocido);
 
 const PORT = 3001;
 app.listen(PORT, () => {
